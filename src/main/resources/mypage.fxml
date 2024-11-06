@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.yd.controller.MyPageController"
+      alignment="CENTER" spacing="20"
+      stylesheets="@/styles/styles.css">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="idLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <Label text="Birthday:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="birthdayLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Phone Number:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <TextField fx:id="phoneField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
+    </GridPane>
+
+    <Button text="Update" onAction="#handleUpdate" prefWidth="200"/>
+    <Label fx:id="messageLabel"/>
+    <Button text="Back to Main" onAction="#goToMain" prefWidth="200"/>
+    <Button text="Logout" onAction="#handleLogout" prefWidth="200"/>
+</VBox>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:controller="com.yd.controller.PostController"
+      xmlns:fx="http://javafx.com/fxml" spacing="10" padding="10">
+    <Label fx:id="postLabel" wrapText="true"/>
+    <ListView fx:id="commentListView" prefHeight="200"/>
+    <HBox spacing="10">
+        <TextField fx:id="commentField" promptText="Add a comment..." HBox.hgrow="ALWAYS"/>
+        <Button fx:id="addCommentButton" text="Add" onAction="#handleAddComment"/>
+    </HBox>
+</VBox>

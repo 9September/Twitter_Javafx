@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.yd.controller.MainController"
+            stylesheets="@/styles/styles.css">
+
+
+    <!-- 상단에 프로필 이미지 추가 -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
+            </padding>
+            <!-- 왼쪽: Twitter 로고 -->
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <ImageView fitWidth="40" fitHeight="40">
+                    <image>
+                        <Image url="@/images/twitter_logo.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fitWidth="100" fitHeight="40">
+                    <image>
+                        <Image url="@/images/twitter.png"/>
+                    </image>
+                </ImageView>
+            </HBox>
+
+            <Pane HBox.hgrow="ALWAYS"/> <!-- 중앙 공간 확보 -->
+
+            <!-- 오른쪽: 사용자 레이블과 프로필 이미지 -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label fx:id="usernameLabel" styleClass="username-label"/>
+                <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40" onMouseClicked="#goToMyPage">
+                    <image>
+                        <Image url="@/images/default_profile.png"/>
+                    </image>
+                </ImageView>
+            </HBox>
+        </HBox>
+    </top>
+
+
+    <!-- 중앙 타임라인 -->
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
+            </padding>
+            <!-- 새로운 포스트 작성 -->
+            <HBox spacing="10">
+                <ImageView fitWidth="40" fitHeight="40">
+                    <image>
+                        <Image url="@/images/default_profile.png"/>
+                    </image>
+                </ImageView>
+                <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS"/>
+            </HBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button fx:id="attachImageButton" text="이미지 첨부" onAction="#handleAttachImage"/>
+                <Button text="Tweet" onAction="#handlePost"/>
+            </HBox>
+
+            <!-- 포스트 리스트 -->
+            <ListView fx:id="postListView" prefHeight="400"/>
+        </VBox>
+    </center>
+
+    <!-- 오른쪽 사이드바 -->
+    <right>
+        <VBox spacing="10">
+            <!-- 팔로잉 목록 -->
+            <Label text="팔로잉 목록" styleClass="section-label"/>
+            <ListView fx:id="followingListView" prefHeight="200"/>
+
+            <!-- 팔로우 추천 목록 -->
+            <Label text="팔로우 추천 목록" styleClass="section-label"/>
+            <ListView fx:id="recommendListView" onMouseClicked="#handleFollowRecommendUser" prefHeight="200"/>
+
+        </VBox>
+    </right>
+</BorderPane>
