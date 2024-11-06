@@ -447,7 +447,7 @@ public class MainController {
 
 
     @FXML
-    void goToMyPage(ActionEvent event) {
+    void goToMyPage(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mypage.fxml"));
             Parent root = loader.load();

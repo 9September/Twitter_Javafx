@@ -7,9 +7,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.yd.controller.MyPageController"
-      alignment="CENTER" spacing="20"
       stylesheets="@/styles/styles.css">
 
     <HBox alignment="CENTER_LEFT" spacing="20" padding="10">
@@ -18,7 +17,7 @@
         </padding>
     <!-- 왼쪽: 트위터 로고와 이미지 -->
         <HBox spacing="5" alignment="CENTER_LEFT">
-            <ImageView fx:id="twitterLogo" fitWidth="40" fitHeight="40" onMouseClicked="#goToMainPage">
+            <ImageView fitWidth="40" fitHeight="40">
                 <image>
                     <Image url="@/images/twitter_logo.png"/>
                 </image>
@@ -34,7 +33,7 @@
         <!-- 오른쪽: 사용자 레이블과 프로필 이미지 -->
         <HBox spacing="10" alignment="CENTER_RIGHT">
             <Label fx:id="usernameLabel" styleClass="username-label"/>
-            <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40" onMouseClicked="#goToMyPage">
+            <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40">
                 <image>
                     <Image url="@/images/default_profile.png"/>
                 </image>
@@ -43,7 +42,7 @@
     </HBox>
 
     <GridPane hgap="10" vgap="10" alignment="CENTER">
-        <ImageView fx:id="profileImage" fitWidth="100" fitHeight="100">
+        <ImageView fitWidth="100" fitHeight="100">
             <image>
                 <Image url="@/images/default_profile.png"/>
             </image>
@@ -67,4 +66,4 @@
     <Label fx:id="messageLabel"/>
     <Button text="Back to Main" onAction="#goToMainPage" prefWidth="200"/>
     <Button text="Logout" onAction="#handleLogout" prefWidth="200"/>
-</VBox>
+</BorderPane>
