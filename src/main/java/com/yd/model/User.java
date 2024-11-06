@@ -10,6 +10,7 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDate birthday;
     private String phoneNumber;
+    private byte[] profileImage;
 
     // 생성자
     public User(String id, String password, String email, LocalDate birthday, String phoneNumber) {
@@ -21,14 +22,16 @@ public class User {
     }
 
     // 전체 생성자
-    public User(String id, String password, String email, LocalDateTime createdAt, LocalDate birthday, String phoneNumber) {
+    public User(String id, String password, String email, LocalDateTime createdAt, LocalDate birthday, String phoneNumber, byte[] profileImage) {
         this.id = id;
         this.password = password;
         this.email = email;
         this.createdAt = createdAt;
         this.birthday = birthday;
         this.phoneNumber = phoneNumber;
+        this.profileImage = profileImage;
     }
+
 
     // Getters and Setters
 
@@ -62,5 +65,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
     }
 }

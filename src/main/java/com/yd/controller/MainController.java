@@ -42,14 +42,6 @@ public class MainController {
     @FXML
     private Button attachImageButton;
 
-    private File selectedImageFile;
-
-    @FXML
-    private Button myPageButton;
-
-    @FXML
-    private Button logoutButton;
-
     @FXML
     private ListView<String> followingListView;
 
@@ -66,6 +58,15 @@ public class MainController {
     @FXML
     private ImageView profileImageView;
     private RetweetDAO retweetDAO = new RetweetDAO();
+    @FXML
+    private ImageView twitterImage;
+    @FXML
+    private Label headerLabel;
+    @FXML
+    private Button logoutButton;
+    private byte[] attachedImageBytes = null;
+    @FXML
+    private ImageView attachedImageView;
 
     private int postOffset = 0;
     private final int postLimit = 20;
@@ -81,6 +82,8 @@ public class MainController {
             return;
         }
         usernameLabel.setText("@" + currentUser.getId());
+        Image profileImage = getImageFromBytes(currentUser.getProfileImage());
+        profileImageView.setImage(profileImage);
 
         // ObservableList 초기화 및 설정
         //postItems = FXCollections.observableArrayList();
@@ -99,13 +102,23 @@ public class MainController {
         loadMorePosts();
     }
 
+    // 바이트 배열을 Image로 변환하는 유틸리티 메서드
+    private Image getImageFromBytes(byte[] imageBytes) {
+        if (imageBytes != null && imageBytes.length > 0) {
+            return new Image(new ByteArrayInputStream(imageBytes));
+        } else {
+            // 기본 이미지 로드
+            return new Image(getClass().getResourceAsStream("/images/default_profile.png"));
+        }
+    }
+
 
     private void goToLogin() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
-            Stage stage = (Stage) postListView.getScene().getWindow();
+            Stage stage = (Stage) usernameLabel.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Twitter Clone - Login");
+            stage.setTitle("Twitter - Login");
             stage.setWidth(800);
             stage.setHeight(600);
         } catch (IOException e) {
@@ -152,9 +165,49 @@ public class MainController {
     // 포스트 ListView 설정
     private void setupPostListView() {
         postListView.setCellFactory(param -> new ListCell<>() {
+            private VBox content = new VBox();
+            private HBox header = new HBox();
+            private ImageView postProfileImageView = new ImageView();
+            private Label userIdLabel = new Label();
+            private Label textLabel = new Label();
+            private ImageView postImageView = new ImageView();
+            private HBox footer = new HBox(10);
             private Button likeButton = new Button();
             private Label likeCountLabel = new Label();
-            private HBox hBox = new HBox(10, likeButton, likeCountLabel);
+            private Button commentButton = new Button("댓글");
+            private Button retweetButton = new Button();
+            private Label retweetCountLabel = new Label();
+
+            {
+                // 프로필 이미지 설정
+                postProfileImageView.setFitWidth(40);
+                postProfileImageView.setFitHeight(40);
+                postProfileImageView.setPreserveRatio(true);
+
+                // 사용자 아이디 레이블 설정
+                userIdLabel.setStyle("-fx-font-weight: bold;");
+
+                // 텍스트 레이블 설정
+                textLabel.setWrapText(true);
+
+                // 포스트 이미지 뷰 설정
+                postImageView.setFitWidth(400);
+                postImageView.setPreserveRatio(true);
+                postImageView.setSmooth(true);
+                postImageView.setCache(true);
+
+                // 좋아요 버튼 및 레이블 설정
+                footer.getChildren().addAll(likeButton, likeCountLabel, commentButton, retweetButton, retweetCountLabel);
+                footer.setSpacing(10);
+
+                // 헤더에 프로필 이미지와 사용자 아이디 추가
+                header.getChildren().addAll(postProfileImageView, userIdLabel);
+                header.setSpacing(10);
+
+                // 콘텐츠에 헤더, 텍스트, 이미지 추가
+                content.getChildren().addAll(header, textLabel, postImageView, footer);
+                content.setSpacing(5);
+            }
 
             @Override
             protected void updateItem(Post post, boolean empty) {
@@ -163,53 +216,37 @@ public class MainController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    // 셀 레이아웃 구성
-                    VBox content = new VBox();
-                    content.setSpacing(5);
+                    // 포스트 작성자의 프로필 이미지를 불러오는 로직 필요
+                    // 현재 예제에서는 작성자의 프로필 이미지를 불러오지 않고, 현재 사용자의 프로필 이미지를 사용
+                    // 실제로는 작성자의 프로필 이미지를 별도로 불러와 설정해야 합니다.
+                    Image profileImage = getImageFromBytes(currentUser.getProfileImage());
+                    postProfileImageView.setImage(profileImage);
 
-                    // 상단: 프로필 이미지, 사용자 아이디
-                    HBox header = new HBox();
-                    header.setSpacing(10);
+                    userIdLabel.setText("@" + post.getWriterId());
+                    textLabel.setText(post.getText());
 
-                    ImageView profileImageView = new ImageView(new Image("/images/default_profile.png"));
-                    profileImageView.setFitWidth(40);
-                    profileImageView.setFitHeight(40);
-
-                    Label userIdLabel = new Label(post.getWriterId());
-
-                    header.getChildren().addAll(profileImageView, userIdLabel);
-
-                    // 본문: 텍스트 내용
-                    Label textLabel = new Label(post.getText());
-                    textLabel.setWrapText(true);
-
-                    // 이미지가 있을 경우 추가
-                    ImageView postImageView = null;
-                    if (post.getImage() != null) {
-                        InputStream is = new ByteArrayInputStream(post.getImage());
-                        Image image = new Image(is);
-                        postImageView = new ImageView(image);
-                        postImageView.setFitWidth(400);
-                        postImageView.setPreserveRatio(true);
+                    if (post.getImage() != null && post.getImage().length > 0) {
+                        Image postImage = getImageFromBytes(post.getImage());
+                        postImageView.setImage(postImage);
+                        postImageView.setVisible(true);
+                    } else {
+                        postImageView.setImage(null);
+                        postImageView.setVisible(false);
                     }
 
-                    // 하단: 하트, 댓글, 리트윗 버튼
-                    HBox footer = new HBox();
-                    footer.setSpacing(20);
+                    // 좋아요 상태 및 카운트 업데이트
+                    boolean isLiked = postDAO.isPostLiked(post.getPostId(), currentUser.getId());
+                    likeButton.setText(isLiked ? "♥" : "♡");
+                    likeCountLabel.setText(String.valueOf(post.getNumOfLikes()));
 
-                    Button likeButton = new Button();
-                    updateLikeButton(likeButton, post);
-
-                    Button commentButton = new Button("댓글");
-                    Button retweetButton = new Button("리트윗");
-
-                    updateRetweetButton(retweetButton, post);
-
-                    footer.getChildren().addAll(likeButton, commentButton, retweetButton);
+                    // 리트윗 상태 및 카운트 업데이트
+                    boolean isRetweeted = retweetDAO.isRetweeted(post.getPostId(), currentUser.getId());
+                    retweetButton.setText(isRetweeted ? "🔁" : "🔁");
+                    retweetCountLabel.setText(String.valueOf(post.getNumOfRetweets()));
 
                     // 이벤트 핸들러 설정
                     likeButton.setOnAction(e -> {
-                        handleLikeAction(post, likeButton);
+                        handleLikeAction(post, likeButton, likeCountLabel);
                     });
 
                     commentButton.setOnAction(e -> {
@@ -217,15 +254,8 @@ public class MainController {
                     });
 
                     retweetButton.setOnAction(e -> {
-                        handleRetweetAction(post, retweetButton);
+                        handleRetweetAction(post, retweetButton, retweetCountLabel);
                     });
-
-                    // content에 요소 추가
-                    content.getChildren().addAll(header, textLabel);
-                    if (postImageView != null) {
-                        content.getChildren().add(postImageView);
-                    }
-                    content.getChildren().add(footer);
 
                     setGraphic(content);
 
@@ -236,12 +266,7 @@ public class MainController {
                 }
             }
 
-            private void updateLikeButton(Button likeButton, Post post) {
-                boolean isLiked = postDAO.isPostLiked(post.getPostId(), currentUser.getId());
-                likeButton.setText(isLiked ? "♥ " + post.getNumOfLikes() : "♡ " + post.getNumOfLikes());
-            }
-
-            private void handleLikeAction(Post post, Button likeButton) {
+            private void handleLikeAction(Post post, Button likeButton, Label likeCountLabel) {
                 if (postDAO.isPostLiked(post.getPostId(), currentUser.getId())) {
                     boolean success = postDAO.unlikePost(post.getPostId(), currentUser.getId());
                     if (success) {
@@ -253,31 +278,30 @@ public class MainController {
                         post.setNumOfLikes(post.getNumOfLikes() + 1);
                     }
                 }
-                updateLikeButton(likeButton, post);
+                // 좋아요 상태 및 카운트 업데이트
+                boolean isLiked = postDAO.isPostLiked(post.getPostId(), currentUser.getId());
+                likeButton.setText(isLiked ? "♥" : "♡");
+                likeCountLabel.setText(String.valueOf(post.getNumOfLikes()));
             }
 
-            private void handleRetweetAction(Post post, Button retweetButton) {
+            private void handleRetweetAction(Post post, Button retweetButton, Label retweetCountLabel) {
                 if (retweetDAO.isRetweeted(post.getPostId(), currentUser.getId())) {
                     boolean success = retweetDAO.removeRetweet(post.getPostId(), currentUser.getId());
                     if (success) {
                         post.setNumOfRetweets(post.getNumOfRetweets() - 1);
-                        updateRetweetButton(retweetButton, post);
                     }
                 } else {
                     boolean success = retweetDAO.addRetweet(post.getPostId(), currentUser.getId());
                     if (success) {
                         post.setNumOfRetweets(post.getNumOfRetweets() + 1);
-                        updateRetweetButton(retweetButton, post);
                     }
                 }
-            }
-
-            private void updateRetweetButton(Button retweetButton, Post post) {
+                // 리트윗 상태 및 카운트 업데이트
                 boolean isRetweeted = retweetDAO.isRetweeted(post.getPostId(), currentUser.getId());
-                retweetButton.setText(isRetweeted ? "리트윗 취소 " + post.getNumOfRetweets() : "리트윗 " + post.getNumOfRetweets());
+                retweetButton.setText(isRetweeted ? "🔁" : "🔁");
+                retweetCountLabel.setText(String.valueOf(post.getNumOfRetweets()));
             }
         });
-
     }
 
     private void openCommentWindow(Post post) {
@@ -298,17 +322,36 @@ public class MainController {
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("오류", "댓글 창을 여는 중 오류가 발생했습니다.");
         }
     }
 
     @FXML
-    void handleAttachImage(ActionEvent event) {
+    private void handleAttachImage(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("이미지 선택");
+        fileChooser.setTitle("이미지 첨부");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("이미지 파일", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-        selectedImageFile = fileChooser.showOpenDialog(postTextArea.getScene().getWindow());
+
+        File selectedFile = fileChooser.showOpenDialog(attachImageButton.getScene().getWindow());
+        if (selectedFile != null) {
+            // 파일 크기 제한 (예: 5MB)
+            if (selectedFile.length() > 5 * 1024 * 1024) { // 5MB
+                showAlert("경고", "이미지 파일 크기가 너무 큽니다. 5MB 이하의 파일을 선택해주세요.");
+                return;
+            }
+
+            try {
+                attachedImageBytes = Files.readAllBytes(selectedFile.toPath());
+                Image image = new Image(new ByteArrayInputStream(attachedImageBytes));
+                attachedImageView.setImage(image); // 이미지 미리보기 설정
+                showAlert("성공", "이미지가 첨부되었습니다.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                showAlert("오류", "이미지 첨부 중 오류가 발생했습니다.");
+            }
+        }
     }
 
     // 팔로우 목록 로드
@@ -349,6 +392,12 @@ public class MainController {
             }
         }
     }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
 
     // 사용자 팔로우
     private void followUser(String userId) {
@@ -356,11 +405,9 @@ public class MainController {
         if (success) {
             loadFollowingList();
             loadRecommendList();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, userId + "님을 팔로우했습니다.", ButtonType.OK);
-            alert.showAndWait();
+            showAlert("성공", userId + "님을 팔로우했습니다.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "팔로우에 실패했습니다.", ButtonType.OK);
-            alert.showAndWait();
+            showAlert("오류", "팔로우에 실패했습니다.");
         }
     }
 
@@ -370,58 +417,87 @@ public class MainController {
         if (success) {
             loadFollowingList();
             loadRecommendList();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, userId + "님의 팔로우를 취소했습니다.", ButtonType.OK);
-            alert.showAndWait();
+            showAlert("성공", userId + "님의 팔로우를 취소했습니다.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "언팔로우에 실패했습니다.", ButtonType.OK);
-            alert.showAndWait();
+            showAlert("오류", "언팔로우에 실패했습니다.");
         }
     }
 
     @FXML
     void handlePost(ActionEvent event) {
-        String text = postTextArea.getText();
+        String text = postTextArea.getText().trim();
         if (text.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "포스트 내용을 입력해주세요.", ButtonType.OK);
-            alert.showAndWait();
+            showAlert("경고", "포스트 내용을 입력해주세요.");
             return;
         }
-        byte[] imageData = null;
-        if (selectedImageFile != null) {
-            try {
-                imageData = Files.readAllBytes(selectedImageFile.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR, "이미지 파일을 읽는 중 오류가 발생했습니다.", ButtonType.OK);
-                alert.showAndWait();
-                return;
-            }
-        }
+
+        byte[] imageData = attachedImageBytes; // 올바른 이미지 데이터 사용
+
         boolean success = postDAO.addPost(text, imageData, currentUser.getId());
         if (success) {
             postTextArea.clear();
-            selectedImageFile = null; // 이미지 선택 초기화
-            loadPosts();
+            attachedImageBytes = null; // 이미지 선택 초기화
+            attachedImageView.setImage(null); // 이미지 미리보기 초기화
+            loadPosts(); // 포스트 다시 로드
+            showAlert("성공", "포스트가 작성되었습니다.");
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "포스트 작성에 실패했습니다.", ButtonType.OK);
-            alert.showAndWait();
+            showAlert("오류", "포스트 작성에 실패했습니다.");
         }
     }
+
 
     @FXML
     void goToMyPage(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/mypage.fxml"));
-            Scene myPageScene = new Scene(loader.load(), 800, 600);
+            Parent root = loader.load();
 
-            Stage stage = (Stage) myPageButton.getScene().getWindow();
-            stage.setScene(myPageScene);
-            stage.setTitle("Twitter");
+            MyPageController myPageController = loader.getController();
+            myPageController.setUser(currentUser); // 현재 사용자 정보를 전달하는 메서드가 있어야 함
+
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("My Page");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(profileImageView.getScene().getWindow());
             stage.setWidth(800);
             stage.setHeight(600);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("오류", "마이페이지 로드 중 오류가 발생했습니다.");
         }
+    }
+
+    @FXML
+    private void goToMainPage(MouseEvent event) {
+        try {
+            // 현재 창을 닫고 메인 창을 다시 로드하는 방식
+            Stage currentStage = (Stage) twitterImage.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            Parent root = loader.load();
+
+            MainController mainController = loader.getController();
+            mainController.setUser(currentUser);
+
+            currentStage.setScene(new Scene(root));
+            currentStage.setTitle("Twitter - Main");
+            currentStage.setWidth(800);
+            currentStage.setHeight(600);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("오류", "메인 페이지 로드 중 오류가 발생했습니다.");
+        }
+    }
+
+    public void setUser(User user) {
+        this.currentUser = user;
+        usernameLabel.setText("@" + user.getId());
+
+        // 프로필 이미지 설정
+        Image profileImage = getImageFromBytes(user.getProfileImage());
+        profileImageView.setImage(profileImage);
     }
 
     @FXML

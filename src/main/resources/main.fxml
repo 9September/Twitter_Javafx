@@ -24,7 +24,7 @@
                         <Image url="@/images/twitter_logo.png"/>
                     </image>
                 </ImageView>
-                <ImageView fitWidth="100" fitHeight="40">
+                <ImageView fx:id="twitterImage" fitWidth="100" fitHeight="40" onMouseClicked="#goToMainPage">
                     <image>
                         <Image url="@/images/twitter.png"/>
                     </image>
@@ -59,7 +59,10 @@
                         <Image url="@/images/default_profile.png"/>
                     </image>
                 </ImageView>
-                <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS"/>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS"/>
+                    <ImageView fx:id="attachedImageView" fitWidth="100" fitHeight="50" preserveRatio="true" visible="true"/>
+                </VBox>
             </HBox>
             <HBox spacing="10" alignment="CENTER_RIGHT">
                 <Button fx:id="attachImageButton" text="이미지 첨부" onAction="#handleAttachImage"/>

@@ -1,20 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.yd.controller.MyPageController"
       alignment="CENTER" spacing="20"
       stylesheets="@/styles/styles.css">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <HBox alignment="CENTER_LEFT" spacing="20" padding="10">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
+        </padding>
+    <!-- 왼쪽: 트위터 로고와 이미지 -->
+        <HBox spacing="5" alignment="CENTER_LEFT">
+            <ImageView fx:id="twitterLogo" fitWidth="40" fitHeight="40" onMouseClicked="#goToMainPage">
+                <image>
+                    <Image url="@/images/twitter_logo.png"/>
+                </image>
+            </ImageView>
+            <ImageView fx:id="twitterImage" fitWidth="100" fitHeight="40" onMouseClicked="#goToMainPage">
+                <image>
+                    <Image url="@/images/twitter.png"/>
+                </image>
+            </ImageView>
+        </HBox>
+        <Pane HBox.hgrow="ALWAYS"/> <!-- 중앙 공간 확보 -->
+
+        <!-- 오른쪽: 사용자 레이블과 프로필 이미지 -->
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Label fx:id="usernameLabel" styleClass="username-label"/>
+            <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40" onMouseClicked="#goToMyPage">
+                <image>
+                    <Image url="@/images/default_profile.png"/>
+                </image>
+            </ImageView>
+        </HBox>
+    </HBox>
 
     <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <ImageView fx:id="profileImage" fitWidth="100" fitHeight="100">
+            <image>
+                <Image url="@/images/default_profile.png"/>
+            </image>
+        </ImageView>
+        <Button text="프로필 사진 변경" onAction="#handleProfileImageUpload"/>
+
         <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <Label fx:id="idLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
@@ -30,6 +65,6 @@
 
     <Button text="Update" onAction="#handleUpdate" prefWidth="200"/>
     <Label fx:id="messageLabel"/>
-    <Button text="Back to Main" onAction="#goToMain" prefWidth="200"/>
+    <Button text="Back to Main" onAction="#goToMainPage" prefWidth="200"/>
     <Button text="Logout" onAction="#handleLogout" prefWidth="200"/>
 </VBox>

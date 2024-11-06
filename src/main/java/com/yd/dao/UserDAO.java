@@ -44,7 +44,8 @@ public class UserDAO {
                         rs.getString("EMAIL"),
                         rs.getTimestamp("CREATED_AT").toLocalDateTime(),
                         rs.getDate("BIRTHDAY").toLocalDate(),
-                        rs.getString("PHONE_NUMBER")
+                        rs.getString("PHONE_NUMBER"),
+                        rs.getBytes("profile_image")
                 );
             }
         } catch (SQLException e) {
@@ -67,7 +68,8 @@ public class UserDAO {
                         rs.getString("EMAIL"),
                         rs.getTimestamp("CREATED_AT").toLocalDateTime(),
                         rs.getDate("BIRTHDAY").toLocalDate(),
-                        rs.getString("PHONE_NUMBER")
+                        rs.getString("PHONE_NUMBER"),
+                        rs.getBytes("profile_image")
                 );
             }
         } catch (SQLException e) {
@@ -84,6 +86,26 @@ public class UserDAO {
             stmt.setString(1, email);
             stmt.setString(2, phoneNumber);
             stmt.setString(3, id);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            // 예외 로그 출력
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // 사용자 프로필 이미지 업데이트 메서드 추가
+    public boolean updateUserProfileImage(String id, byte[] imageBytes) {
+        String sql = "UPDATE USERS SET profile_image = ? WHERE ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            if (imageBytes != null) {
+                stmt.setBytes(1, imageBytes);
+            } else {
+                stmt.setNull(1, java.sql.Types.BLOB);
+            }
+            stmt.setString(2, id);
             int rows = stmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
