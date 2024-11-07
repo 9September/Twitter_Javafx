@@ -53,12 +53,8 @@
                 <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
             </padding>
             <!-- 새로운 포스트 작성 -->
+            <Label text="포스트 작성" styleClass="username-label"/>
             <HBox spacing="10">
-                <ImageView fitWidth="40" fitHeight="40">
-                    <image>
-                        <Image url="@/images/default_profile.png"/>
-                    </image>
-                </ImageView>
                 <VBox spacing="5" HBox.hgrow="ALWAYS">
                     <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS"/>
                     <ImageView fx:id="attachedImageView" fitWidth="100" fitHeight="50" preserveRatio="true" visible="true"/>

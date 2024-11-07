@@ -59,6 +59,8 @@ public class MainController {
     private boolean isLoading = false;
     @FXML
     private ImageView profileImageView;
+    @FXML
+    private ImageView postProfileImageView;
     private RetweetDAO retweetDAO = new RetweetDAO();
     @FXML
     private ImageView twitterImage;
@@ -169,10 +171,10 @@ public class MainController {
         postListView.setCellFactory(param -> new ListCell<>() {
             private VBox content = new VBox();
             private HBox header = new HBox();
-            private ImageView postProfileImageView = new ImageView();
             private Label userIdLabel = new Label();
             private Label textLabel = new Label();
             private ImageView postImageView = new ImageView();
+            private ImageView postProfileImageView = new ImageView();
             private HBox footer = new HBox(10);
             private Button likeButton = new Button();
             private Label likeCountLabel = new Label();
