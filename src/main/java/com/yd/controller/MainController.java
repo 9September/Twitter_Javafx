@@ -3,6 +3,7 @@ package com.yd.controller;
 import com.yd.dao.FollowDAO;
 import com.yd.dao.PostDAO;
 import com.yd.dao.RetweetDAO;
+import com.yd.dao.UserDAO;
 import com.yd.model.Follow;
 import com.yd.model.Post;
 import com.yd.model.User;
@@ -52,6 +53,7 @@ public class MainController {
 
     private PostDAO postDAO = new PostDAO();
     private FollowDAO followDAO = new FollowDAO();
+    private UserDAO userDAO = new UserDAO();
 
     private User currentUser;
     private boolean isLoading = false;
@@ -216,11 +218,11 @@ public class MainController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    // 포스트 작성자의 프로필 이미지를 불러오는 로직 필요
-                    // 현재 예제에서는 작성자의 프로필 이미지를 불러오지 않고, 현재 사용자의 프로필 이미지를 사용
-                    // 실제로는 작성자의 프로필 이미지를 별도로 불러와 설정해야 합니다.
-                    Image profileImage = getImageFromBytes(currentUser.getProfileImage());
-                    postProfileImageView.setImage(profileImage);
+
+                    byte[] writerImageBytes = userDAO.getUserProfileImage(post.getWriterId());
+
+                    Image profileImage = getImageFromBytes(writerImageBytes);
+                    postProfileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
 
                     userIdLabel.setText("@" + post.getWriterId());
                     textLabel.setText(post.getText());
@@ -300,6 +302,10 @@ public class MainController {
                 boolean isRetweeted = retweetDAO.isRetweeted(post.getPostId(), currentUser.getId());
                 retweetButton.setText(isRetweeted ? "🔁" : "🔁");
                 retweetCountLabel.setText(String.valueOf(post.getNumOfRetweets()));
+            }
+
+            private Image getDefaultProfileImage() {
+                return new Image(getClass().getResourceAsStream("/images/default_profile.png"));
             }
         });
     }

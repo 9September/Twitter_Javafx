@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="mypage system activate">
+    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="mypage bug fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mypage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mypage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +30,7 @@
     <setting file="file://$PROJECT_DIR$/src/main/resources/mypage.fxml" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -124,7 +126,8 @@
       <workItem from="1730880797774" duration="6682000" />
       <workItem from="1730887830311" duration="2996000" />
       <workItem from="1730890840032" duration="111000" />
-      <workItem from="1730940092647" duration="1460000" />
+      <workItem from="1730940092647" duration="1479000" />
+      <workItem from="1730944043757" duration="1992000" />
     </task>
     <task id="LOCAL-00001" summary="add image attach system in post">
       <option name="closed" value="true" />
@@ -150,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730941407542</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="mypage bug fix">
+      <option name="closed" value="true" />
+      <created>1730941571096</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730941571096</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +171,7 @@
     <MESSAGE value="add image attach system in post" />
     <MESSAGE value="several bug fix" />
     <MESSAGE value="mypage system activate" />
-    <option name="LAST_COMMIT_MESSAGE" value="mypage system activate" />
+    <MESSAGE value="mypage bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="mypage bug fix" />
   </component>
 </project>

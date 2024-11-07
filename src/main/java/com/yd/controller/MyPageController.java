@@ -49,6 +49,9 @@ public class MyPageController {
     @FXML
     private ImageView profileImageView;
     @FXML
+    private ImageView centralProfileImageView;
+
+    @FXML
     private ImageView twitterImage;
     @FXML
     private Label usernameLabel;
@@ -64,6 +67,8 @@ public class MyPageController {
         }
         Image profileImage = getImageFromBytes(currentUser.getProfileImage());
         profileImageView.setImage(profileImage);
+
+        centralProfileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
         loadUserInfo();
     }
 
@@ -74,6 +79,8 @@ public class MyPageController {
         // 프로필 이미지를 데이터베이스에서 불러와 설정
         Image profileImage = getImageFromBytes(user.getProfileImage());
         profileImageView.setImage(profileImage);
+
+        centralProfileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
     }
 
     private Image getImageFromBytes(byte[] imageBytes) {
@@ -83,6 +90,10 @@ public class MyPageController {
             // 기본 이미지 로드
             return new Image(getClass().getResourceAsStream("/images/default_profile.png"));
         }
+    }
+
+    private Image getDefaultProfileImage() {
+        return new Image(getClass().getResourceAsStream("/images/default_profile.png"));
     }
 
     // 사용자 정보 로드
@@ -120,8 +131,8 @@ public class MyPageController {
         File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
         if (selectedFile != null) {
-            // 파일 크기 제한 (예: 2MB)
-            if (selectedFile.length() > 2 * 1024 * 1024) { // 2MB
+            // 파일 크기 제한 (예: 20MB)
+            if (selectedFile.length() > 20 * 1024 * 1024) { // 2MB
                 Alert alert = new Alert(Alert.AlertType.WARNING, "이미지 파일 크기가 너무 큽니다. 2MB 이하의 파일을 선택해주세요.", ButtonType.OK);
                 alert.showAndWait();
                 return;
@@ -139,6 +150,7 @@ public class MyPageController {
                     // ImageView 업데이트
                     Image profileImage = getImageFromBytes(imageBytes);
                     profileImageView.setImage(profileImage);
+                    centralProfileImageView.setImage(profileImage);
 
                     // 메인 페이지의 프로필 이미지도 업데이트하려면, 메인 페이지 컨트롤러에 접근하거나 창을 다시 로드해야 합니다.
 
@@ -178,6 +190,29 @@ public class MyPageController {
             alert.showAndWait();
         }
     }
+
+    @FXML
+    private void goToMainPageButton(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
+            Parent root = loader.load();
+
+            MainController mainController = loader.getController();
+            mainController.setUser(currentUser);
+
+            // 현재 Stage 가져오기
+            Stage stage = (Stage) messageLabel.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Twitter - Main");
+            stage.setWidth(800);
+            stage.setHeight(600);
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "메인 페이지 로드 중 오류가 발생했습니다.", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+
 
     @FXML
     void handleLogout(ActionEvent event) {

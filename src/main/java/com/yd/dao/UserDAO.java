@@ -114,4 +114,19 @@ public class UserDAO {
             return false;
         }
     }
+
+    public byte[] getUserProfileImage(String userId) {
+        String sql = "SELECT PROFILE_IMAGE FROM USERS WHERE ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getBytes("profile_image");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // 기본 이미지 사용 시 null 반환
+    }
 }
