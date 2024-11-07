@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.ImageView?>
@@ -10,60 +9,73 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.yd.controller.MyPageController"
       stylesheets="@/styles/styles.css">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
+            </padding>
+         <!-- 왼쪽: 트위터 로고와 이미지 -->
+            <HBox spacing="5" alignment="CENTER_LEFT">
+                <ImageView fitWidth="40" fitHeight="40">
+                    <image>
+                        <Image url="@/images/twitter_logo.png"/>
+                    </image>
+                </ImageView>
+                <ImageView fx:id="twitterImage" fitWidth="100" fitHeight="40" onMouseClicked="#goToMainPage">
+                    <image>
+                        <Image url="@/images/twitter.png"/>
+                    </image>
+                </ImageView>
+            </HBox>
+            <Pane HBox.hgrow="ALWAYS"/> <!-- 중앙 공간 확보 -->
 
-    <HBox alignment="CENTER_LEFT" spacing="20" padding="10">
-        <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
-        </padding>
-    <!-- 왼쪽: 트위터 로고와 이미지 -->
-        <HBox spacing="5" alignment="CENTER_LEFT">
-            <ImageView fitWidth="40" fitHeight="40">
-                <image>
-                    <Image url="@/images/twitter_logo.png"/>
-                </image>
-            </ImageView>
-            <ImageView fx:id="twitterImage" fitWidth="100" fitHeight="40" onMouseClicked="#goToMainPage">
-                <image>
-                    <Image url="@/images/twitter.png"/>
-                </image>
-            </ImageView>
+            <!-- 오른쪽: 사용자 레이블과 프로필 이미지 -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Label fx:id="usernameLabel" styleClass="username-label"/>
+                <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40">
+                    <image>
+                        <Image url="@/images/default_profile.png"/>
+                    </image>
+                </ImageView>
+            </HBox>
         </HBox>
-        <Pane HBox.hgrow="ALWAYS"/> <!-- 중앙 공간 확보 -->
+    </top>
 
-        <!-- 오른쪽: 사용자 레이블과 프로필 이미지 -->
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Label fx:id="usernameLabel" styleClass="username-label"/>
-            <ImageView fx:id="profileImageView" fitWidth="40" fitHeight="40">
+    <center>
+        <GridPane hgap="10" vgap="10" alignment="CENTER">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
+            </padding>
+            <ImageView fitWidth="100" fitHeight="100">
                 <image>
                     <Image url="@/images/default_profile.png"/>
                 </image>
             </ImageView>
-        </HBox>
-    </HBox>
+            <Button text="프로필 사진 변경" onAction="#handleProfileImageUpload" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
-    <GridPane hgap="10" vgap="10" alignment="CENTER">
-        <ImageView fitWidth="100" fitHeight="100">
-            <image>
-                <Image url="@/images/default_profile.png"/>
-            </image>
-        </ImageView>
-        <Button text="프로필 사진 변경" onAction="#handleProfileImageUpload"/>
+            <!-- 사용자 정보 -->
+            <Label text="ID:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="idLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-        <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <Label fx:id="idLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <TextField fx:id="emailField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
 
-        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
+            <Label text="Birthday:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <Label fx:id="birthdayLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-        <Label text="Birthday:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-        <Label fx:id="birthdayLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label text="Phone Number:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <TextField fx:id="phoneField" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="200"/>
+        </GridPane>
+    </center>
 
-        <Label text="Phone Number:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-        <TextField fx:id="phoneField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
-    </GridPane>
-
-    <Button text="Update" onAction="#handleUpdate" prefWidth="200"/>
-    <Label fx:id="messageLabel"/>
-    <Button text="Back to Main" onAction="#goToMainPage" prefWidth="200"/>
-    <Button text="Logout" onAction="#handleLogout" prefWidth="200"/>
+    <bottom>
+        <VBox spacing="10" alignment="CENTER">
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="업데이트" onAction="#handleUpdate" prefWidth="200"/>
+                <Button text="메인 페이지로" onAction="#goToMainPage" prefWidth="200"/>
+                <Button text="로그아웃" onAction="#handleLogout" prefWidth="200"/>
+            </HBox>
+            <Label fx:id="messageLabel"/>
+        </VBox>
+    </bottom>
 </BorderPane>

@@ -186,7 +186,7 @@ public class MyPageController {
             Stage stage = (Stage) idLabel.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Twitter");
-            stage.setWidth(800);
+            stage.setWidth(400);
             stage.setHeight(600);
         } catch (IOException e) {
             e.printStackTrace();

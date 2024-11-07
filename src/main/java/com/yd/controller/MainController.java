@@ -456,14 +456,11 @@ public class MainController {
             myPageController.setUser(currentUser); // 현재 사용자 정보를 전달하는 메서드가 있어야 함
 
 
-            Stage stage = new Stage();
+            Stage stage = (Stage) profileImageView.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("My Page");
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(profileImageView.getScene().getWindow());
             stage.setWidth(800);
             stage.setHeight(600);
-            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("오류", "마이페이지 로드 중 오류가 발생했습니다.");
