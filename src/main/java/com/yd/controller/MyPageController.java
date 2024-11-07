@@ -64,6 +64,7 @@ public class MyPageController {
         }
         Image profileImage = getImageFromBytes(currentUser.getProfileImage());
         profileImageView.setImage(profileImage);
+        loadUserInfo();
     }
 
     public void setUser(User user) {

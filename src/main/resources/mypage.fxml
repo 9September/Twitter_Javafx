@@ -70,7 +70,7 @@
 
     <bottom>
         <VBox spacing="10" alignment="CENTER">
-            <HBox spacing="10" alignment="CENTER">
+            <HBox spacing="1" alignment="CENTER">
                 <Button text="업데이트" onAction="#handleUpdate" prefWidth="200"/>
                 <Button text="메인 페이지로" onAction="#goToMainPage" prefWidth="200"/>
                 <Button text="로그아웃" onAction="#handleLogout" prefWidth="200"/>
