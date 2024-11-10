@@ -67,8 +67,8 @@ public class LoginController {
                 Stage stage = (Stage) idField.getScene().getWindow();
                 stage.setScene(new Scene(loader.load()));
                 stage.setTitle("Twitter");
-                stage.setWidth(800);
-                stage.setHeight(600);
+                stage.setWidth(1080);
+                stage.setHeight(720);
             } catch (IOException e) {
                 e.printStackTrace();
                 messageLabel.setText("메인 화면을 로드하는 중 오류가 발생했습니다.");
@@ -85,8 +85,8 @@ public class LoginController {
             Stage stage = (Stage) idField.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Twitter");
-            stage.setWidth(800);
-            stage.setHeight(600);
+            stage.setWidth(1080);
+            stage.setHeight(720);
         } catch (IOException e) {
             e.printStackTrace();
         }

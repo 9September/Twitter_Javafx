@@ -90,13 +90,8 @@ public class MainController {
         profileImageView.setImage(profileImage);
 
         // ObservableList 초기화 및 설정
-        //postItems = FXCollections.observableArrayList();
         postListView.setItems(postItems);
         setupPostListView();
-
-        // 초기 오프셋 설정 및 첫 데이터 로드
-        //postOffset = 0;
-        //loadMorePosts();
 
         // 다른 초기화 작업
         loadFollowingList();
@@ -123,7 +118,7 @@ public class MainController {
             Stage stage = (Stage) usernameLabel.getScene().getWindow();
             stage.setScene(new Scene(loader.load()));
             stage.setTitle("Twitter - Login");
-            stage.setWidth(800);
+            stage.setWidth(400);
             stage.setHeight(600);
         } catch (IOException e) {
             e.printStackTrace();
@@ -145,7 +140,7 @@ public class MainController {
         Task<List<Post>> loadTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                return postDAO.getPostsByUserAndFollowing(currentUser.getId(), postOffset, postLimit);
+                return postDAO.getAllPosts(postOffset, postLimit);
             }
         };
 
@@ -160,7 +155,8 @@ public class MainController {
 
         loadTask.setOnFailed(event -> {
             isLoading = false;
-            // 오류 처리 코드 추가 가능
+            Throwable error = loadTask.getException();
+            showAlert("오류", "포스트를 로드하는 중 오류가 발생했습니다: " + error.getMessage());
         });
 
         new Thread(loadTask).start();
@@ -467,8 +463,8 @@ public class MainController {
             Stage stage = (Stage) profileImageView.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("My Page");
-            stage.setWidth(800);
-            stage.setHeight(600);
+            stage.setWidth(1080);
+            stage.setHeight(720);
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("오류", "마이페이지 로드 중 오류가 발생했습니다.");
@@ -488,8 +484,8 @@ public class MainController {
 
             currentStage.setScene(new Scene(root));
             currentStage.setTitle("Twitter - Main");
-            currentStage.setWidth(800);
-            currentStage.setHeight(600);
+            currentStage.setWidth(1080);
+            currentStage.setHeight(720);
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("오류", "메인 페이지 로드 중 오류가 발생했습니다.");
@@ -503,20 +499,5 @@ public class MainController {
         // 프로필 이미지 설정
         Image profileImage = getImageFromBytes(user.getProfileImage());
         profileImageView.setImage(profileImage);
-    }
-
-    @FXML
-    void handleLogout(ActionEvent event) {
-        LoginController.setCurrentUser(null); // 현재 사용자 정보 초기화
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
-            Stage stage = (Stage) logoutButton.getScene().getWindow();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Twitter");
-            stage.setWidth(800);
-            stage.setHeight(600);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

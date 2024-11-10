@@ -182,8 +182,8 @@ public class MyPageController {
 
             currentStage.setScene(new Scene(root));
             currentStage.setTitle("Twitter - Main");
-            currentStage.setWidth(800);
-            currentStage.setHeight(600);
+            currentStage.setWidth(1080);
+            currentStage.setHeight(720);
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "메인 페이지 로드 중 오류가 발생했습니다.", ButtonType.OK);
@@ -194,6 +194,7 @@ public class MyPageController {
     @FXML
     private void goToMainPageButton(ActionEvent event) {
         try {
+            Stage currentStage = (Stage) twitterImage.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
             Parent root = loader.load();
 
@@ -204,8 +205,8 @@ public class MyPageController {
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Twitter - Main");
-            stage.setWidth(800);
-            stage.setHeight(600);
+            stage.setWidth(1080);
+            stage.setHeight(720);
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "메인 페이지 로드 중 오류가 발생했습니다.", ButtonType.OK);

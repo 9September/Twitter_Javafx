@@ -128,4 +128,31 @@ public class PostDAO {
         }
         return false;
     }
+
+    public List<Post> getAllPosts(int offset, int limit) {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM POSTS ORDER BY CREATED_AT DESC LIMIT ? OFFSET ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, limit);
+            stmt.setInt(2, offset);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Post post = new Post(
+                        rs.getInt("POST_ID"),
+                        rs.getString("TEXT"),
+                        rs.getBytes("IMAGE"),
+                        rs.getString("WRITER_ID"),
+                        rs.getTimestamp("CREATED_AT").toLocalDateTime(),
+                        rs.getInt("NUM_OF_LIKES"),
+                        rs.getInt("NUM_OF_RETWEETS")
+                );
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return posts;
+    }
 }
