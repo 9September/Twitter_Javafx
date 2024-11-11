@@ -1,7 +1,14 @@
 package com.yd.controller;
 
+import com.yd.dao.CommentDAO;
+import com.yd.dao.LikeDAO;
+import com.yd.dao.PostDAO;
 import com.yd.dao.UserDAO;
+import com.yd.model.Comment;
+import com.yd.model.Post;
 import com.yd.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,45 +25,54 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.util.List;
 
 public class MyPageController {
 
     @FXML
     private Label idLabel;
-
     @FXML
     private TextField emailField;
-
     @FXML
     private Label birthdayLabel;
-
     @FXML
     private TextField phoneField;
-
     @FXML
     private Label messageLabel;
-
+    @FXML
+    private DatePicker birthdayPicker;
     @FXML
     private Button backButton;
-
     @FXML
-    private ImageView logoImageView; // 로고 ImageView 추가
-
-    private UserDAO userDAO = new UserDAO();
-    private User currentUser;
+    private ImageView logoImageView;
     @FXML
     private Label headerLabel;
     @FXML
     private ImageView profileImageView;
     @FXML
     private ImageView centralProfileImageView;
-
     @FXML
     private ImageView twitterImage;
     @FXML
     private Label usernameLabel;
     @FXML
     private Button uploadProfileImageButton;
+    @FXML
+    private TabPane myTabPane;
+    @FXML
+    private ListView<Post> myPostsListView;
+    @FXML
+    private ListView<Comment> myCommentsListView;
+    @FXML
+    private ListView<Post> likedPostsListView;
+
+    private UserDAO userDAO = new UserDAO();
+    private PostDAO postDAO = new PostDAO();
+    private CommentDAO commentDAO = new CommentDAO();
+    private LikeDAO likeDAO = new LikeDAO();
+    private User currentUser;
+
 
     @FXML
     public void initialize() {
@@ -69,7 +85,11 @@ public class MyPageController {
         profileImageView.setImage(profileImage);
 
         centralProfileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
-        loadUserInfo();
+        //loadUserInfo();
+
+        setupMyPostsListView();
+        setupMyCommentsListView();
+        setupLikedPostsListView();
     }
 
     public void setUser(User user) {
@@ -81,6 +101,11 @@ public class MyPageController {
         profileImageView.setImage(profileImage);
 
         centralProfileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
+
+        loadUserInfo();
+        loadMyPosts();
+        loadMyComments();
+        loadLikedPosts();
     }
 
     private Image getImageFromBytes(byte[] imageBytes) {
@@ -100,7 +125,9 @@ public class MyPageController {
     private void loadUserInfo() {
         idLabel.setText(currentUser.getId());
         emailField.setText(currentUser.getEmail());
-        birthdayLabel.setText(currentUser.getBirthday().toString());
+        if (currentUser.getBirthday() != null) {
+            birthdayPicker.setValue(currentUser.getBirthday());
+        }
         phoneField.setText(currentUser.getPhoneNumber());
     }
 
@@ -108,13 +135,20 @@ public class MyPageController {
     void handleUpdate(ActionEvent event) {
         String newEmail = emailField.getText();
         String newPhone = phoneField.getText();
+        LocalDate newBirthday = birthdayPicker.getValue();
 
-        boolean success = userDAO.updateUser(currentUser.getId(), newEmail, newPhone);
+        // 생일이 선택되지 않은 경우 현재 생일 유지
+        if (newBirthday == null && currentUser.getBirthday() != null) {
+            newBirthday = currentUser.getBirthday();
+        }
+
+        boolean success = userDAO.updateUser(currentUser.getId(), newEmail, newPhone, newBirthday);
         if (success) {
             messageLabel.setText("정보가 업데이트되었습니다.");
             // 업데이트된 정보를 currentUser에 반영
             currentUser.setEmail(newEmail);
             currentUser.setPhoneNumber(newPhone);
+            currentUser.setBirthday(newBirthday);
         } else {
             messageLabel.setText("정보 업데이트에 실패했습니다.");
         }
@@ -228,5 +262,69 @@ public class MyPageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // 내가 올린 포스트 로드
+    private void loadMyPosts() {
+        List<Post> myPosts = postDAO.getPostsByUserId(currentUser.getId());
+        ObservableList<Post> myPostsList = FXCollections.observableArrayList(myPosts);
+        myPostsListView.setItems(myPostsList);
+    }
+
+    // 내가 단 댓글 로드
+    private void loadMyComments() {
+        List<Comment> myComments = commentDAO.getCommentsByUserId(currentUser.getId());
+        ObservableList<Comment> myCommentsList = FXCollections.observableArrayList(myComments);
+        myCommentsListView.setItems(myCommentsList);
+    }
+
+    // 내가 좋아요 한 포스트 로드
+    private void loadLikedPosts() {
+        List<Post> likedPosts = likeDAO.getLikedPostsByUserId(currentUser.getId());
+        ObservableList<Post> likedPostsList = FXCollections.observableArrayList(likedPosts);
+        likedPostsListView.setItems(likedPostsList);
+    }
+
+    // ListView 셀 팩토리 설정
+    private void setupMyPostsListView() {
+        myPostsListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Post post, boolean empty) {
+                super.updateItem(post, empty);
+                if (empty || post == null) {
+                    setText(null);
+                } else {
+                    setText("[" + post.getWriterId() + "] " + post.getText() + " (" + post.getCreatedAt() + ")");
+                }
+            }
+        });
+    }
+
+    private void setupMyCommentsListView() {
+        myCommentsListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Comment comment, boolean empty) {
+                super.updateItem(comment, empty);
+                if (empty || comment == null) {
+                    setText(null);
+                } else {
+                    setText("[" + comment.getWriterId() + "] " + comment.getText() + " (" + comment.getCreatedAt() + ")");
+                }
+            }
+        });
+    }
+
+    private void setupLikedPostsListView() {
+        likedPostsListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Post post, boolean empty) {
+                super.updateItem(post, empty);
+                if (empty || post == null) {
+                    setText(null);
+                } else {
+                    setText("[" + post.getWriterId() + "] " + post.getText() + " (" + post.getCreatedAt() + ")");
+                }
+            }
+        });
     }
 }

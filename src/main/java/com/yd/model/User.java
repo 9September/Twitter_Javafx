@@ -55,6 +55,10 @@ public class User {
         return birthday;
     }
 
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -74,4 +78,5 @@ public class User {
     public void setProfileImage(byte[] profileImage) {
         this.profileImage = profileImage;
     }
+
 }

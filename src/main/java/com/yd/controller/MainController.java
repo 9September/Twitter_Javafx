@@ -197,7 +197,7 @@ public class MainController {
                 postImageView.setCache(true);
 
                 // 좋아요 버튼 및 레이블 설정
-                footer.getChildren().addAll(likeButton, likeCountLabel, commentButton, retweetButton, retweetCountLabel);
+                footer.getChildren().addAll(likeButton, likeCountLabel, commentButton);
                 footer.setSpacing(10);
 
                 // 헤더에 프로필 이미지와 사용자 아이디 추가

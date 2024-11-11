@@ -4,9 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="you should change user/password">
+    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/CommentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/CommentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/util/ConsoleTwitterApp.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mypage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mypage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +27,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -134,6 +145,8 @@
       <workItem from="1731207983707" duration="85000" />
       <workItem from="1731224836108" duration="706000" />
       <workItem from="1731295564409" duration="292000" />
+      <workItem from="1731296117949" duration="1461000" />
+      <workItem from="1731320415485" duration="3982000" />
     </task>
     <task id="LOCAL-00001" summary="add image attach system in post">
       <option name="closed" value="true" />
@@ -199,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731295638904</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="update">
+      <option name="closed" value="true" />
+      <created>1731296144131</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1731296144131</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +235,7 @@
     <MESSAGE value="bug fix" />
     <MESSAGE value="resize main/signup/mypage" />
     <MESSAGE value="you should change user/password" />
-    <option name="LAST_COMMIT_MESSAGE" value="you should change user/password" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

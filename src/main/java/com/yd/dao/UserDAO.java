@@ -3,10 +3,8 @@ package com.yd.dao;
 import com.yd.model.User;
 import com.yd.util.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class UserDAO {
 
@@ -79,13 +77,18 @@ public class UserDAO {
     }
 
     // 사용자 정보 업데이트 (재추가된 메서드)
-    public boolean updateUser(String id, String email, String phoneNumber) {
-        String sql = "UPDATE USERS SET EMAIL = ?, PHONE_NUMBER = ? WHERE ID = ?";
+    public boolean updateUser(String id, String email, String phoneNumber, LocalDate birthday) {
+        String sql = "UPDATE USERS SET EMAIL = ?, PHONE_NUMBER = ?, BIRTHDAY = ? WHERE ID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             stmt.setString(2, phoneNumber);
-            stmt.setString(3, id);
+            if (birthday != null) {
+                stmt.setDate(3, Date.valueOf(birthday));
+            } else {
+                stmt.setNull(3, Types.DATE);
+            }
+            stmt.setString(4, id);
             int rows = stmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {

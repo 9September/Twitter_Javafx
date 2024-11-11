@@ -53,6 +53,30 @@ public class CommentDAO {
         return comments;
     }
 
+    public List<Comment> getCommentsByUserId(String userId) {
+        List<Comment> comments = new ArrayList<>();
+        String sql = "SELECT * FROM COMMENTS WHERE WRITER_ID = ? ORDER BY CREATED_AT DESC";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Comment comment = new Comment(
+                        rs.getInt("COMMENT_ID"),
+                        rs.getString("TEXT"),
+                        rs.getString("WRITER_ID"),
+                        rs.getInt("POST_ID"),
+                        rs.getInt("NUM_OF_LIKES"),
+                        rs.getTimestamp("CREATED_AT").toLocalDateTime()
+                );
+                comments.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return comments;
+    }
+
     // 댓글 좋아요
     public boolean likeComment(int commentId, String userId) {
         String sql = "INSERT INTO COMMENTS_LIKE (COMMENT_ID, USER_ID) VALUES (?, ?)";

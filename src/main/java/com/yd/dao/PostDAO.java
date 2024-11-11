@@ -72,15 +72,12 @@ public class PostDAO {
     }
 
     // 현재 사용자와 팔로잉하는 사용자의 포스트 가져오기
-    public List<Post> getPostsByUserAndFollowing(String userId, int offset, int limit) {
+    public List<Post> getPostsByUserId(String userId) {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT * FROM POSTS WHERE WRITER_ID = ? OR WRITER_ID IN (SELECT FOLLOWING_ID FROM FOLLOW WHERE FOLLOWER_ID = ?) ORDER BY CREATED_AT DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM POSTS WHERE WRITER_ID = ? ORDER BY CREATED_AT DESC";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, userId);
-            stmt.setString(2, userId);
-            stmt.setInt(3, limit);
-            stmt.setInt(4, offset);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Post post = new Post(

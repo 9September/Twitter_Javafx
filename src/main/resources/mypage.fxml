@@ -7,14 +7,16 @@
 <?import javafx.scene.image.Image?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.yd.controller.MyPageController"
-      stylesheets="@/styles/styles.css">
+            fx:controller="com.yd.controller.MyPageController"
+            stylesheets="@/styles/styles.css">
+
+    <!-- 상단: 트위터 로고 및 사용자 프로필 -->
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
             </padding>
-         <!-- 왼쪽: 트위터 로고와 이미지 -->
+            <!-- 왼쪽: 트위터 로고와 이미지 -->
             <HBox spacing="5" alignment="CENTER_LEFT">
                 <ImageView fitWidth="40" fitHeight="40">
                     <image>
@@ -41,33 +43,72 @@
         </HBox>
     </top>
 
+    <!-- 중앙: 프로필 이미지 및 사용자 정보 상단, TabPane 하단 -->
     <center>
-        <GridPane hgap="10" vgap="10" alignment="CENTER">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
-            </padding>
-            <ImageView fx:id="centralProfileImageView" fitWidth="100" fitHeight="100">
-                <image>
-                    <Image url="@/images/default_profile.png"/>
-                </image>
-            </ImageView>
-            <Button text="프로필 사진 변경" onAction="#handleProfileImageUpload" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+        <VBox spacing="20" alignment="CENTER">
+            <!-- 상단: 프로필 이미지 및 변경 버튼과 사용자 정보 -->
+            <HBox spacing="20" alignment="CENTER">
+                <!-- 왼쪽: 프로필 이미지 및 변경 버튼 -->
+                <VBox spacing="10" alignment="CENTER">
+                    <ImageView fx:id="centralProfileImageView" fitWidth="100" fitHeight="100">
+                        <image>
+                            <Image url="@/images/default_profile.png"/>
+                        </image>
+                    </ImageView>
+                    <Button text="프로필 사진 변경" onAction="#handleProfileImageUpload"/>
+                </VBox>
 
-            <!-- 사용자 정보 -->
-            <Label text="ID:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <Label fx:id="idLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <!-- 오른쪽: 사용자 정보 -->
+                <GridPane hgap="10" vgap="10" alignment="CENTER_LEFT">
+                    <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="idLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-            <Label text="Email:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <TextField fx:id="emailField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
+                    <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="emailField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
 
-            <Label text="Birthday:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <Label fx:id="birthdayLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                    <Label text="Birthday:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <DatePicker fx:id="birthdayPicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-            <Label text="Phone Number:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-            <TextField fx:id="phoneField" GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="200"/>
-        </GridPane>
+                    <Label text="Phone Number:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="phoneField" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="200"/>
+                </GridPane>
+            </HBox>
+
+            <!-- 하단: TabPane (내가 올린 포스트, 내가 단 댓글, 내가 좋아요 한 포스트) -->
+            <TabPane fx:id="myTabPane" prefHeight="300" prefWidth="300">
+                <tabs>
+                    <!-- 내가 올린 포스트 탭 -->
+                    <Tab text="내가 올린 포스트">
+                        <BorderPane>
+                            <center>
+                                <ListView fx:id="myPostsListView"/>
+                            </center>
+                        </BorderPane>
+                    </Tab>
+
+                    <!-- 내가 단 댓글 탭 -->
+                    <Tab text="내가 단 댓글">
+                        <BorderPane>
+                            <center>
+                                <ListView fx:id="myCommentsListView"/>
+                            </center>
+                        </BorderPane>
+                    </Tab>
+
+                    <!-- 내가 좋아요 한 포스트 탭 -->
+                    <Tab text="내가 좋아요 한 포스트">
+                        <BorderPane>
+                            <center>
+                                <ListView fx:id="likedPostsListView"/>
+                            </center>
+                        </BorderPane>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
     </center>
 
+    <!-- 하단: 업데이트, 메인 페이지로, 로그아웃 버튼 -->
     <bottom>
         <VBox spacing="10" alignment="CENTER">
             <HBox spacing="1" alignment="CENTER">
