@@ -1,0 +1,21 @@
+Index: src/main/java/com/yd/util/DatabaseConnection.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.yd.util;\n\nimport java.sql.Connection;\nimport java.sql.DriverManager;\nimport java.sql.SQLException;\n\npublic class DatabaseConnection {\n\n    private static final String URL = \"jdbc:mysql://localhost:3306/TWITTER?useSSL=false&serverTimezone=UTC\";\n    private static final String USER = \"write your id\";\n    private static final String PASSWORD = \"write your password\";\n\n    private static Connection connection = null;\n\n    public static Connection getConnection() throws SQLException {\n        if (connection == null || connection.isClosed()) {\n            connection = DriverManager.getConnection(URL, USER, PASSWORD);\n        }\n        return connection;\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/yd/util/DatabaseConnection.java b/src/main/java/com/yd/util/DatabaseConnection.java
+--- a/src/main/java/com/yd/util/DatabaseConnection.java	(revision f01209f0582febdf35f23ae5525c55e3386cd2b8)
++++ b/src/main/java/com/yd/util/DatabaseConnection.java	(date 1731296476474)
+@@ -7,8 +7,8 @@
+ public class DatabaseConnection {
+ 
+     private static final String URL = "jdbc:mysql://localhost:3306/TWITTER?useSSL=false&serverTimezone=UTC";
+-    private static final String USER = "write your id";
+-    private static final String PASSWORD = "write your password";
++    private static final String USER = "root";
++    private static final String PASSWORD = "yd157238+";
+ 
+     private static Connection connection = null;
+ 
