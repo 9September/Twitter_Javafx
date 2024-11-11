@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="bug fix">
+    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="you should change user/password">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/SignUpController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +132,8 @@
       <workItem from="1730944043757" duration="6643000" />
       <workItem from="1730971032821" duration="300000" />
       <workItem from="1731207983707" duration="85000" />
-      <workItem from="1731224836108" duration="623000" />
+      <workItem from="1731224836108" duration="706000" />
+      <workItem from="1731295564409" duration="292000" />
     </task>
     <task id="LOCAL-00001" summary="add image attach system in post">
       <option name="closed" value="true" />
@@ -186,7 +183,23 @@
       <option name="project" value="LOCAL" />
       <updated>1730951099876</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="resize main/signup/mypage">
+      <option name="closed" value="true" />
+      <created>1731225534587</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731225534587</updated>
+    </task>
+    <task id="LOCAL-00008" summary="you should change user/password">
+      <option name="closed" value="true" />
+      <created>1731295638904</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731295638904</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +212,8 @@
     <MESSAGE value="mypage bug fix" />
     <MESSAGE value="profile change bug fix" />
     <MESSAGE value="bug fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fix" />
+    <MESSAGE value="resize main/signup/mypage" />
+    <MESSAGE value="you should change user/password" />
+    <option name="LAST_COMMIT_MESSAGE" value="you should change user/password" />
   </component>
 </project>
