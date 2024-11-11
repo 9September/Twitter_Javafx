@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     private static final String URL = "jdbc:mysql://localhost:3306/TWITTER?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "Write your ID";
-    private static final String PASSWORD = "Write your PASSWORD";
+    private static final String USER = "write your id";
+    private static final String PASSWORD = "write your password";
 
     private static Connection connection = null;
 
