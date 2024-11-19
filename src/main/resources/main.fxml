@@ -56,7 +56,7 @@
             <Label text="포스트 작성" styleClass="username-label"/>
             <HBox spacing="10">
                 <VBox spacing="5" HBox.hgrow="ALWAYS">
-                    <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS"/>
+                    <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS" prefHeight="300"/>
                     <ImageView fx:id="attachedImageView" fitWidth="100" fitHeight="50" preserveRatio="true" visible="true"/>
                 </VBox>
             </HBox>
@@ -66,21 +66,23 @@
             </HBox>
 
             <!-- 포스트 리스트 -->
-            <ListView fx:id="postListView" prefHeight="400"/>
+            <ListView fx:id="postListView" prefHeight="600"/>
         </VBox>
     </center>
 
     <!-- 오른쪽 사이드바 -->
     <right>
-        <VBox spacing="10">
-            <!-- 팔로잉 목록 -->
-            <Label text="팔로잉 목록" styleClass="section-label"/>
-            <ListView fx:id="followingListView" prefHeight="200"/>
+        <VBox spacing="10" styleClass="sidebar">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/> <!-- 안쪽 여백 설정 -->
+            </padding>
+            <!-- Following List -->
+            <Label text="팔로잉 목록" styleClass="section-title"/>
+            <ListView fx:id="followingListView" prefHeight="200" styleClass="list-view"/>
 
-            <!-- 팔로우 추천 목록 -->
-            <Label text="팔로우 추천 목록" styleClass="section-label"/>
-            <ListView fx:id="recommendListView" onMouseClicked="#handleFollowRecommendUser" prefHeight="200"/>
-
+            <!-- Follow Recommendations -->
+            <Label text="팔로우 추천 목록" styleClass="section-title"/>
+            <ListView fx:id="recommendListView" onMouseClicked="#handleFollowRecommendUser" prefHeight="200" styleClass="list-view"/>
         </VBox>
     </right>
 </BorderPane>

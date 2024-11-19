@@ -66,6 +66,12 @@ public class MyPageController {
     private ListView<Comment> myCommentsListView;
     @FXML
     private ListView<Post> likedPostsListView;
+    @FXML
+    private Label postCountLabel;
+    @FXML
+    private Label followerCountLabel;
+    @FXML
+    private Label followingCountLabel;
 
     private UserDAO userDAO = new UserDAO();
     private PostDAO postDAO = new PostDAO();
@@ -106,6 +112,7 @@ public class MyPageController {
         loadMyPosts();
         loadMyComments();
         loadLikedPosts();
+        loadUserStatistics();
     }
 
     private Image getImageFromBytes(byte[] imageBytes) {
@@ -129,6 +136,20 @@ public class MyPageController {
             birthdayPicker.setValue(currentUser.getBirthday());
         }
         phoneField.setText(currentUser.getPhoneNumber());
+    }
+
+    private void loadUserStatistics() {
+        // 게시글 수
+        int postCount = postDAO.getPostCountByUserId(currentUser.getId());
+        postCountLabel.setText(String.valueOf(postCount));
+
+        // 팔로워 수
+        int followerCount = userDAO.getFollowerCount(currentUser.getId());
+        followerCountLabel.setText(String.valueOf(followerCount));
+
+        // 팔로잉 수
+        int followingCount = userDAO.getFollowingCount(currentUser.getId());
+        followingCountLabel.setText(String.valueOf(followingCount));
     }
 
     @FXML
@@ -287,44 +308,14 @@ public class MyPageController {
 
     // ListView 셀 팩토리 설정
     private void setupMyPostsListView() {
-        myPostsListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Post post, boolean empty) {
-                super.updateItem(post, empty);
-                if (empty || post == null) {
-                    setText(null);
-                } else {
-                    setText("[" + post.getWriterId() + "] " + post.getText() + " (" + post.getCreatedAt() + ")");
-                }
-            }
-        });
+        myPostsListView.setCellFactory(param -> new PostListCell(currentUser));
     }
 
     private void setupMyCommentsListView() {
-        myCommentsListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Comment comment, boolean empty) {
-                super.updateItem(comment, empty);
-                if (empty || comment == null) {
-                    setText(null);
-                } else {
-                    setText("[" + comment.getWriterId() + "] " + comment.getText() + " (" + comment.getCreatedAt() + ")");
-                }
-            }
-        });
+        myCommentsListView.setCellFactory(param -> new CommentListCell(currentUser));
     }
 
     private void setupLikedPostsListView() {
-        likedPostsListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Post post, boolean empty) {
-                super.updateItem(post, empty);
-                if (empty || post == null) {
-                    setText(null);
-                } else {
-                    setText("[" + post.getWriterId() + "] " + post.getText() + " (" + post.getCreatedAt() + ")");
-                }
-            }
-        });
+        likedPostsListView.setCellFactory(param -> new PostListCell(currentUser));
     }
 }

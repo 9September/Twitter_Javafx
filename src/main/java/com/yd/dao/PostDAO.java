@@ -97,33 +97,42 @@ public class PostDAO {
         return posts;
     }
 
-    // 마지막으로 삽입된 포스트의 ID 가져오기
-    public int getLastInsertId() {
-        String sql = "SELECT LAST_INSERT_ID()";
+    public int getPostCountByUserId(String userId) {
+        String sql = "SELECT COUNT(*) AS post_count FROM POSTS WHERE WRITER_ID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);
+                return rs.getInt("post_count");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1; // 실패 시 -1 반환
+        return 0;
     }
 
-    // 포스트 존재 여부 확인
-    public boolean postExists(int postId) {
-        String sql = "SELECT * FROM POSTS WHERE POST_ID = ?";
+    public Post getPostById(int postId) {
+        String sql = "SELECT * FROM posts WHERE POST_ID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, postId);
             ResultSet rs = stmt.executeQuery();
-            return rs.next();
+            if (rs.next()) {
+                return new Post(
+                        rs.getInt("POST_ID"),
+                        rs.getString("TEXT"),
+                        rs.getBytes("IMAGE"),
+                        rs.getString("WRITER_ID"),
+                        rs.getTimestamp("CREATED_AT").toLocalDateTime(),
+                        rs.getInt("NUM_OF_LIKES"),
+                        rs.getInt("NUM_OF_RETWEETS")
+                );
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public List<Post> getAllPosts(int offset, int limit) {

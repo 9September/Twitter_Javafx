@@ -9,6 +9,7 @@ public class Comment {
     private int postId;
     private int numOfLikes;
     private LocalDateTime createdAt;
+    private Post post;
 
     public Comment(int commentId, String text, String writerId, int postId, int numOfLikes, LocalDateTime createdAt) {
         this.commentId = commentId;
@@ -47,5 +48,13 @@ public class Comment {
 
     public void setNumOfLikes(int numOfLikes) {
         this.numOfLikes = numOfLikes;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

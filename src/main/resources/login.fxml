@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.yd.controller.LoginController"
       alignment="CENTER" spacing="20"
@@ -23,19 +24,22 @@
         </image>
     </ImageView>
 
-    <!-- GridPane을 감싸는 VBox로 중앙 정렬 강화 -->
-    <VBox alignment="CENTER" spacing="10">
-        <GridPane hgap="10" vgap="10" alignment="CENTER">
-            <Label text="ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="idField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
-
-            <Label text="Password:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
-        </GridPane>
+    <VBox alignment="CENTER" spacing="15">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <TextField fx:id="idField" promptText="아이디" styleClass="text-field-small"/>
+        <PasswordField fx:id="passwordField" promptText="비밀번호" styleClass="password-field-small"/>
+        <Button text="로그인" onAction="#handleLogin" styleClass="login-primary-button"/>
     </VBox>
 
-    <Button text="Login" onAction="#handleLogin" prefWidth="200"/>
-    <Hyperlink text="Sign Up" onAction="#goToSignUp" prefWidth="200"/>
+    <HBox spacing="10" alignment="CENTER">
+        <Separator orientation="HORIZONTAL" prefWidth="100"/>
+        <Label text="또는" />
+        <Separator orientation="HORIZONTAL" prefWidth="100"/>
+    </HBox>
+    <Label text="계정이 없으신가요?" />
+    <Hyperlink text="Register" onAction="#goToSignUp"/>
 
-    <Label fx:id="messageLabel"/>
+    <Label fx:id="messageLabel" textFill="red"/>
 </VBox>

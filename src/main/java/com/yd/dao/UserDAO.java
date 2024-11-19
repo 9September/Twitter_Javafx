@@ -118,8 +118,29 @@ public class UserDAO {
         }
     }
 
+    public boolean updateUserProfile(String userId, String name, String email, String phone, LocalDate birthday) {
+        String sql = "UPDATE USERS SET NAME = ?, EMAIL = ?, PHONE_NUMBER = ?, BIRTHDAY = ? WHERE ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, email);
+            stmt.setString(3, phone);
+            if (birthday != null) {
+                stmt.setDate(4, Date.valueOf(birthday));
+            } else {
+                stmt.setNull(4, Types.DATE);
+            }
+            stmt.setString(5, userId);
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public byte[] getUserProfileImage(String userId) {
-        String sql = "SELECT PROFILE_IMAGE FROM USERS WHERE ID = ?";
+        String sql = "SELECT profile_image FROM USERS WHERE ID = ?";
         try (Connection conn = DatabaseConnection.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, userId);
@@ -131,5 +152,35 @@ public class UserDAO {
             e.printStackTrace();
         }
         return null; // 기본 이미지 사용 시 null 반환
+    }
+
+    public int getFollowerCount(String userId) {
+        String sql = "SELECT COUNT(*) AS follower_count FROM FOLLOW WHERE FOLLOWER_ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("follower_count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getFollowingCount(String userId) {
+        String sql = "SELECT COUNT(*) AS following_count FROM FOLLOW WHERE FOLLOWING_ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("following_count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

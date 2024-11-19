@@ -44,10 +44,10 @@ public class MainController {
     private Button attachImageButton;
 
     @FXML
-    private ListView<String> followingListView;
+    private ListView<User> followingListView;
 
     @FXML
-    private ListView<String> recommendListView; // 팔로우 추천 리스트
+    private ListView<User> recommendListView; // 팔로우 추천 리스트
     @FXML
     private Label usernameLabel; // 사용자 이름 표시
 
@@ -96,7 +96,8 @@ public class MainController {
         // 다른 초기화 작업
         loadFollowingList();
         setupFollowingListView();
-        loadRecommendList(); // 팔로우 추천 목록 로드
+        setupRecommendListView();
+        loadRecommendList();
 
         loadMorePosts();
     }
@@ -358,23 +359,113 @@ public class MainController {
         }
     }
 
-    // 팔로우 목록 로드
+
+
     private void loadFollowingList() {
-        List<Follow> following = followDAO.getFollowing(currentUser.getId());
-        ObservableList<String> items = FXCollections.observableArrayList();
-        for (Follow follow : following) {
-            items.add(follow.getFollowingId());
-        }
+        List<User> followingUsers = followDAO.getFollowingUsers(currentUser.getId());
+        ObservableList<User> items = FXCollections.observableArrayList(followingUsers);
+        followingListView.setPlaceholder(new Label("팔로잉 목록이 없습니다."));
         followingListView.setItems(items);
     }
 
     // 팔로우 목록 ListView 설정
     private void setupFollowingListView() {
+        followingListView.setCellFactory(param -> new ListCell<>() {
+            private HBox content;
+            private ImageView profileImageView;
+            private Label nameLabel;
+
+            {
+                content = new HBox(10);
+                profileImageView = new ImageView();
+                profileImageView.setFitWidth(40);
+                profileImageView.setFitHeight(40);
+                profileImageView.setPreserveRatio(true);
+
+                nameLabel = new Label();
+                nameLabel.getStyleClass().add("user-name-label");
+
+                content.getChildren().addAll(profileImageView, nameLabel);
+            }
+
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+                if (empty || user == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Image profileImage = getImageFromBytes(user.getProfileImage());
+                    profileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
+                    nameLabel.setText(user.getId());
+
+                    setGraphic(content);
+
+                    // Hover 시 스타일 적용
+                    content.setOnMouseEntered(e -> content.setStyle("-fx-background-color: #f0f0f0;"));
+                    content.setOnMouseExited(e -> content.setStyle("-fx-background-color: transparent;"));
+                }
+            }
+        });
+
         followingListView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) { // 더블 클릭 시 언팔로우
-                String selectedUser = followingListView.getSelectionModel().getSelectedItem();
+                User selectedUser = followingListView.getSelectionModel().getSelectedItem();
                 if (selectedUser != null) {
-                    unfollowUser(selectedUser);
+                    unfollowUser(selectedUser.getId()); // 사용자 아이디로 언팔로우
+                }
+            }
+        });
+    }
+
+    private Image getDefaultProfileImage() {
+        return new Image(getClass().getResourceAsStream("/images/default_profile.png"));
+    }
+
+    private void setupRecommendListView() {
+        recommendListView.setCellFactory(param -> new ListCell<>() {
+            private HBox content;
+            private ImageView profileImageView;
+            private Label nameLabel;
+
+            {
+                content = new HBox(10);
+                profileImageView = new ImageView();
+                profileImageView.setFitWidth(40);
+                profileImageView.setFitHeight(40);
+                profileImageView.setPreserveRatio(true);
+
+                nameLabel = new Label();
+                nameLabel.getStyleClass().add("user-name-label");
+
+                content.getChildren().addAll(profileImageView, nameLabel);
+            }
+
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+                if (empty || user == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Image profileImage = getImageFromBytes(user.getProfileImage());
+                    profileImageView.setImage(profileImage != null ? profileImage : getDefaultProfileImage());
+                    nameLabel.setText(user.getId());
+
+                    setGraphic(content);
+
+                    // Hover 시 스타일 적용
+                    content.setOnMouseEntered(e -> content.setStyle("-fx-background-color: #f0f0f0;"));
+                    content.setOnMouseExited(e -> content.setStyle("-fx-background-color: transparent;"));
+                }
+            }
+        });
+
+        recommendListView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // 더블 클릭 시 팔로우
+                User selectedUser = recommendListView.getSelectionModel().getSelectedItem();
+                if (selectedUser != null) {
+                    followUser(selectedUser.getId()); // 사용자 아이디로 팔로우
                 }
             }
         });
@@ -382,17 +473,18 @@ public class MainController {
 
     // 팔로우 추천 목록 로드
     private void loadRecommendList() {
-        List<String> recommendUsers = followDAO.getRecommendUsers(currentUser.getId());
-        ObservableList<String> items = FXCollections.observableArrayList(recommendUsers);
+        List<User> recommendUsers = followDAO.getRecommendUsers(currentUser.getId());
+        ObservableList<User> items = FXCollections.observableArrayList(recommendUsers);
+        recommendListView.setPlaceholder(new Label("추천할 사용자가 없습니다."));
         recommendListView.setItems(items);
     }
 
     @FXML
     void handleFollowRecommendUser(MouseEvent event) {
         if (event.getClickCount() == 2) { // 더블 클릭 시 팔로우
-            String selectedUser = recommendListView.getSelectionModel().getSelectedItem();
+            User selectedUser = recommendListView.getSelectionModel().getSelectedItem();
             if (selectedUser != null) {
-                followUser(selectedUser);
+                followUser(selectedUser.getId());
             }
         }
     }

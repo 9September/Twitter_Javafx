@@ -74,6 +74,26 @@
                 </GridPane>
             </HBox>
 
+            <HBox spacing="30" alignment="CENTER">
+                <!-- 내가 쓴 게시글 갯수 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Label text="게시글" styleClass="stat-title"/>
+                    <Label fx:id="postCountLabel" text="0" styleClass="stat-count"/>
+                </VBox>
+
+                <!-- 내 팔로워 수 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Label text="팔로워" styleClass="stat-title"/>
+                    <Label fx:id="followerCountLabel" text="0" styleClass="stat-count"/>
+                </VBox>
+
+                <!-- 내 팔로잉 수 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Label text="팔로잉" styleClass="stat-title"/>
+                    <Label fx:id="followingCountLabel" text="0" styleClass="stat-count"/>
+                </VBox>
+            </HBox>
+
             <!-- 하단: TabPane (내가 올린 포스트, 내가 단 댓글, 내가 좋아요 한 포스트) -->
             <TabPane fx:id="myTabPane" prefHeight="300" prefWidth="300">
                 <tabs>
