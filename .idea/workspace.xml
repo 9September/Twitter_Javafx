@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="mypage update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/model/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/model/Post.java" afterDir="false" />
+    <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="DatabaseConnection update">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mypage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mypage.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +132,7 @@
       <workItem from="1731907437029" duration="731000" />
       <workItem from="1731908175620" duration="1394000" />
       <workItem from="1732015942072" duration="1388000" />
-      <workItem from="1732018974566" duration="3242000" />
+      <workItem from="1732018974566" duration="3409000" />
     </task>
     <task id="LOCAL-00001" summary="add image attach system in post">
       <option name="closed" value="true" />
@@ -239,7 +230,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732016116298</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update search system">
+      <option name="closed" value="true" />
+      <created>1732022342603</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1732022342603</updated>
+    </task>
+    <task id="LOCAL-00014" summary="DatabaseConnection update">
+      <option name="closed" value="true" />
+      <created>1732022378938</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1732022378938</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,6 +263,8 @@
     <MESSAGE value="you should change user/password" />
     <MESSAGE value="update" />
     <MESSAGE value="mypage update" />
-    <option name="LAST_COMMIT_MESSAGE" value="mypage update" />
+    <MESSAGE value="update search system" />
+    <MESSAGE value="DatabaseConnection update" />
+    <option name="LAST_COMMIT_MESSAGE" value="DatabaseConnection update" />
   </component>
 </project>
