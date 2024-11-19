@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.sql.SQLException;
 import java.util.List;
 
 public class MainController {
@@ -42,6 +43,9 @@ public class MainController {
 
     @FXML
     private Button attachImageButton;
+
+    @FXML
+    private TextField searchField;
 
     @FXML
     private ListView<User> followingListView;
@@ -75,7 +79,8 @@ public class MainController {
     private int postOffset = 0;
     private final int postLimit = 20;
     private ObservableList<Post> postItems = FXCollections.observableArrayList();
-
+    private boolean isSearchMode = false;
+    private String currentSearchQuery = "";
 
     @FXML
     public void initialize() {
@@ -100,6 +105,9 @@ public class MainController {
         loadRecommendList();
 
         loadMorePosts();
+
+        // 검색필드에서 ENTER 눌렀을 때도 handleSearch 호출
+        searchField.setOnAction(this::handleSearch);
     }
 
     // 바이트 배열을 Image로 변환하는 유틸리티 메서드
@@ -130,6 +138,7 @@ public class MainController {
     private void loadPosts() {
         postOffset = 0; // 오프셋 초기화
         postItems.clear(); // 기존 아이템 초기화
+        postListView.setPlaceholder(new Label("검색 결과가 없습니다."));
         loadMorePosts(); // 초기 포스트 로드
     }
 
@@ -141,7 +150,11 @@ public class MainController {
         Task<List<Post>> loadTask = new Task<>() {
             @Override
             protected List<Post> call() throws Exception {
-                return postDAO.getAllPosts(postOffset, postLimit);
+                if (isSearchMode) {
+                    return postDAO.searchPosts(currentSearchQuery, postOffset, postLimit);
+                } else {
+                    return postDAO.getAllPosts(postOffset, postLimit);
+                }
             }
         };
 
@@ -529,15 +542,21 @@ public class MainController {
 
         byte[] imageData = attachedImageBytes; // 올바른 이미지 데이터 사용
 
-        boolean success = postDAO.addPost(text, imageData, currentUser.getId());
-        if (success) {
-            postTextArea.clear();
-            attachedImageBytes = null; // 이미지 선택 초기화
-            attachedImageView.setImage(null); // 이미지 미리보기 초기화
-            loadPosts(); // 포스트 다시 로드
-            showAlert("성공", "포스트가 작성되었습니다.");
-        } else {
-            showAlert("오류", "포스트 작성에 실패했습니다.");
+        try {
+            boolean success = postDAO.addPostWithHashtags(text, imageData, currentUser.getId());
+            if (success) {
+                postTextArea.clear();
+                attachedImageBytes = null; // 이미지 선택 초기화
+                attachedImageView.setImage(null); // 이미지 미리보기 초기화
+                attachedImageView.setVisible(false);
+                loadPosts(); // 포스트 다시 로드
+                showAlert("성공", "포스트가 작성되었습니다.");
+            } else {
+                showAlert("오류", "포스트 작성에 실패했습니다.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("오류", "포스트 작성 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
 
@@ -591,5 +610,31 @@ public class MainController {
         // 프로필 이미지 설정
         Image profileImage = getImageFromBytes(user.getProfileImage());
         profileImageView.setImage(profileImage);
+    }
+
+
+    @FXML
+    void handleSearch(ActionEvent event) {
+        String query = searchField.getText().trim();
+        if (query.isEmpty()) {
+            // If search field is empty, exit search mode and reload all posts
+            isSearchMode = false;
+            currentSearchQuery = "";
+            postItems.clear();
+            postOffset = 0;
+            loadMorePosts();
+            return;
+        }
+
+        // Set search mode
+        isSearchMode = true;
+        if (query.startsWith("#")) {
+            currentSearchQuery = query.substring(1).toLowerCase(); // 해시태그 검색 시 '#' 제거 및 소문자
+        } else {
+            currentSearchQuery = query.toLowerCase(); // 일반 검색 시 소문자
+        }
+        postItems.clear();
+        postOffset = 0;
+        loadMorePosts();
     }
 }

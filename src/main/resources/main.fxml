@@ -31,7 +31,10 @@
                 </ImageView>
             </HBox>
 
-            <Pane HBox.hgrow="ALWAYS"/> <!-- 중앙 공간 확보 -->
+            <HBox alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+                <TextField fx:id="searchField" promptText="검색어를 입력하세요 (유저ID, 내용, #해시태그)" HBox.hgrow="ALWAYS" onAction="#handleSearch" styleClass="search-field"/>
+                <Button text="검색" onAction="#handleSearch" styleClass="search-button"/>
+            </HBox>
 
             <!-- 오른쪽: 사용자 레이블과 프로필 이미지 -->
             <HBox spacing="10" alignment="CENTER_RIGHT">
@@ -56,8 +59,8 @@
             <Label text="포스트 작성" styleClass="username-label"/>
             <HBox spacing="10">
                 <VBox spacing="5" HBox.hgrow="ALWAYS">
-                    <TextArea fx:id="postTextArea" promptText="What's happening?" HBox.hgrow="ALWAYS" prefHeight="300"/>
-                    <ImageView fx:id="attachedImageView" fitWidth="100" fitHeight="50" preserveRatio="true" visible="true"/>
+                    <TextArea fx:id="postTextArea" promptText="포스트를 작성하세요!" HBox.hgrow="ALWAYS" prefHeight="300"/>
+                    <ImageView fx:id="attachedImageView" fitWidth="100" fitHeight="50" preserveRatio="true" visible="false"/>
                 </VBox>
             </HBox>
             <HBox spacing="10" alignment="CENTER_RIGHT">

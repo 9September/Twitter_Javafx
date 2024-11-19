@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -96,6 +97,7 @@ public class MyPageController {
         setupMyPostsListView();
         setupMyCommentsListView();
         setupLikedPostsListView();
+        setCircularProfileImage();
     }
 
     public void setUser(User user) {
@@ -176,7 +178,7 @@ public class MyPageController {
     }
 
     @FXML
-    private void handleProfileImageUpload(ActionEvent event) {
+    private void handleProfileImageUpload(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("프로필 사진 업로드");
         fileChooser.getExtensionFilters().addAll(
@@ -186,8 +188,8 @@ public class MyPageController {
         File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
 
         if (selectedFile != null) {
-            // 파일 크기 제한 (예: 20MB)
-            if (selectedFile.length() > 20 * 1024 * 1024) { // 2MB
+            // 파일 크기 제한 (예: 2MB)
+            if (selectedFile.length() > 2 * 1024 * 1024) { // 2MB
                 Alert alert = new Alert(Alert.AlertType.WARNING, "이미지 파일 크기가 너무 큽니다. 2MB 이하의 파일을 선택해주세요.", ButtonType.OK);
                 alert.showAndWait();
                 return;
@@ -207,8 +209,6 @@ public class MyPageController {
                     profileImageView.setImage(profileImage);
                     centralProfileImageView.setImage(profileImage);
 
-                    // 메인 페이지의 프로필 이미지도 업데이트하려면, 메인 페이지 컨트롤러에 접근하거나 창을 다시 로드해야 합니다.
-
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "프로필 사진이 업데이트되었습니다.", ButtonType.OK);
                     alert.showAndWait();
                 } else {
@@ -221,6 +221,12 @@ public class MyPageController {
                 alert.showAndWait();
             }
         }
+    }
+
+    private void setCircularProfileImage() {
+        double radius = centralProfileImageView.getFitWidth() / 2;
+        Circle clip = new Circle(radius, radius, radius);
+        centralProfileImageView.setClip(clip);
     }
 
     @FXML

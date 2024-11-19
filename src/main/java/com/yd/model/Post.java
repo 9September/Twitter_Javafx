@@ -21,14 +21,26 @@ public class Post {
         this.numOfRetweets = numOfRetweets;
     }
 
+    public Post() {
+
+    }
+
     // Getters and Setters
 
     public int getPostId() {
         return postId;
     }
 
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public byte[] getImage() {
@@ -51,8 +63,15 @@ public class Post {
         return writerId;
     }
 
+    public void setWriterId(String writerId) {
+        this.writerId = writerId;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public int getNumOfLikes() {

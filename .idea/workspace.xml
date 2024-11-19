@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="02ebe6d8-c186-42e9-a489-3c4b85c8e082" name="Changes" comment="mypage update">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_24,_8_46 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_11_24__8_46PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/MyPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/CommentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/CommentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/FollowDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/FollowDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/LikeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/LikeDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/PostDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/dao/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/dao/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/model/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/model/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/model/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/model/Post.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/yd/util/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/main.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mypage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mypage.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles/styles.css" afterDir="false" />
@@ -148,7 +140,8 @@
       <workItem from="1731833855921" duration="33000" />
       <workItem from="1731907437029" duration="731000" />
       <workItem from="1731908175620" duration="1394000" />
-      <workItem from="1732015942072" duration="93000" />
+      <workItem from="1732015942072" duration="1388000" />
+      <workItem from="1732018974566" duration="3242000" />
     </task>
     <task id="LOCAL-00001" summary="add image attach system in post">
       <option name="closed" value="true" />
@@ -238,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731325685988</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="mypage update">
+      <option name="closed" value="true" />
+      <created>1732016116298</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1732016116298</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

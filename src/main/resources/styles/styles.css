@@ -24,6 +24,19 @@
     -fx-background-color: #E8F5FD;
 }
 
+/* 검색 바 스타일링 */
+#searchTextField {
+    -fx-background-color: #F5F8FA;
+    -fx-border-color: #E1E8ED;
+    -fx-border-radius: 5;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+}
+
+#searchTextField:focused {
+    -fx-border-color: #1DA1F2;
+}
+
 /* 버튼 스타일 */
 .button {
     -fx-background-color: #74cbff;
@@ -137,4 +150,49 @@
 
 .comment-cell:hover {
     -fx-background-color: #e8e8e8;
+}
+
+/* 프로필 이미지 스택팬 스타일 */
+.profile-image-stackpane {
+    -fx-cursor: hand; /* 마우스 커서를 손 모양으로 변경 */
+    -fx-effect: dropshadow(gaussian, transparent, 0, 0, 0, 0);
+    -fx-clip: null;
+    -fx-background-radius: 100; /* 이미지 크기의 절반 */
+    -fx-border-radius: 100;
+}
+
+#centralProfileImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0, 0, 2);
+    -fx-cursor: hand; /* 커서를 손 모양으로 변경 */
+}
+
+.profile-image-stackpane:hover {
+    /* 이미지 어둡게 하기 */
+    -fx-opacity: 0.6;
+}
+
+/* 프로필 이미지 뷰 스타일 */
+.centralProfileImageView {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+    -fx-background-radius: 50%; /* 원형으로 만들기 */
+    -fx-border-radius: 50%; /* 원형으로 만들기 */
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+/* 프로필 오버레이 라벨 스타일 */
+.profile-overlay-label {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 */
+    -fx-padding: 5 10;
+    -fx-background-radius: 5;
+    -fx-opacity: 0; /* 초기에는 보이지 않게 설정 */
+    -fx-transition: opacity 0.3s;
+}
+
+/* 호버 시 오버레이 라벨 표시 */
+.profile-image-stackpane:hover .profile-overlay-label {
+    -fx-opacity: 1;
 }

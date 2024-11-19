@@ -50,12 +50,14 @@
             <HBox spacing="20" alignment="CENTER">
                 <!-- 왼쪽: 프로필 이미지 및 변경 버튼 -->
                 <VBox spacing="10" alignment="CENTER">
-                    <ImageView fx:id="centralProfileImageView" fitWidth="100" fitHeight="100">
-                        <image>
-                            <Image url="@/images/default_profile.png"/>
-                        </image>
-                    </ImageView>
-                    <Button text="프로필 사진 변경" onAction="#handleProfileImageUpload"/>
+                    <StackPane fx:id="profileImageStackPane" onMouseClicked="#handleProfileImageUpload" styleClass="profile-image-stackpane">
+                        <ImageView fx:id="centralProfileImageView" fitWidth="150" fitHeight="150">
+                            <image>
+                                <Image url="@/images/default_profile.png"/>
+                            </image>
+                        </ImageView>
+                        <Label text="사진을 변경하려면 클릭하세요" styleClass="profile-overlay-label" visible="false"/>
+                    </StackPane>
                 </VBox>
 
                 <!-- 오른쪽: 사용자 정보 -->
@@ -133,7 +135,6 @@
         <VBox spacing="10" alignment="CENTER">
             <HBox spacing="1" alignment="CENTER">
                 <Button text="업데이트" onAction="#handleUpdate" prefWidth="200"/>
-                <Button text="메인 페이지로" onAction="#goToMainPageButton" prefWidth="200"/>
                 <Button text="로그아웃" onAction="#handleLogout" prefWidth="200"/>
             </HBox>
             <Label fx:id="messageLabel"/>

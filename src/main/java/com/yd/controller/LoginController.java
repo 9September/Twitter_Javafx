@@ -47,6 +47,8 @@ public class LoginController {
         // 로고 이미지 로드
         Image logo = new Image(getClass().getResourceAsStream("/images/twitter_logo.png"));
         logoImageView.setImage(logo);
+
+        passwordField.setOnAction(this::handleLogin);
     }
 
     @FXML
