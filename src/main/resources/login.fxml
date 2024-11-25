@@ -39,7 +39,8 @@
         <Separator orientation="HORIZONTAL" prefWidth="100"/>
     </HBox>
     <Label text="계정이 없으신가요?" />
-    <Hyperlink text="Register" onAction="#goToSignUp"/>
+    <Hyperlink text="회원 가입하기" onAction="#goToSignUp"/>
+    <Hyperlink text="비밀번호 찾기" onAction="#handleForgotPassword"/>
 
     <Label fx:id="messageLabel" textFill="red"/>
 </VBox>

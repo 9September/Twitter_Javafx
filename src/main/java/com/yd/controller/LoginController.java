@@ -93,4 +93,18 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void handleForgotPassword(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/forgot_password.fxml"));
+            Stage stage = (Stage) idField.getScene().getWindow();
+            stage.setScene(new Scene(loader.load()));
+            stage.setTitle("비밀번호 찾기");
+            stage.setWidth(400);
+            stage.setHeight(600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

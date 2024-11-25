@@ -118,19 +118,29 @@ public class UserDAO {
         }
     }
 
-    public boolean updateUserProfile(String userId, String name, String email, String phone, LocalDate birthday) {
-        String sql = "UPDATE USERS SET NAME = ?, EMAIL = ?, PHONE_NUMBER = ?, BIRTHDAY = ? WHERE ID = ?";
+    public boolean verifyUserInfo(String id, String email, LocalDate birthday, String phoneNumber) {
+        String sql = "SELECT * FROM USERS WHERE ID = ? AND EMAIL = ? AND BIRTHDAY = ? AND PHONE_NUMBER = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, name);
+            stmt.setString(1, id);
             stmt.setString(2, email);
-            stmt.setString(3, phone);
-            if (birthday != null) {
-                stmt.setDate(4, Date.valueOf(birthday));
-            } else {
-                stmt.setNull(4, Types.DATE);
-            }
-            stmt.setString(5, userId);
+            stmt.setDate(3, Date.valueOf(birthday));
+            stmt.setString(4, phoneNumber);
+
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updatePassword(String userId, String newPassword) {
+        String sql = "UPDATE USERS SET PASSWORD = ? WHERE ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newPassword);
+            stmt.setString(2, userId);
             int rows = stmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
